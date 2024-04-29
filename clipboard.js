@@ -1,6 +1,7 @@
 const { Box, Label, ListBox, Icon, Scrollable, Window } = Widget;
 const { exec } = Utils;
 
+// I'm not using async here because I want the performance of the script to be obvious
 const clipboard = exec(`${App.configDir}/clipboard.sh`);
 
 
@@ -26,6 +27,8 @@ const ClipBoard = () => {
     };
 
     const decodeItem = (index) => {
+        // Also using exec here to show how slow this is
+        // It also gives this error when using async: "Lib.Error g-unix-error-quark: Too many open files"
         const out = exec([
             'bash', '-c', `cliphist list | grep ${index} | cliphist decode`,
         ]);
