@@ -10,17 +10,23 @@ const ClipBoard = () => {
 
     const makeItem = (key, val) => {
         console.log(key);
-        const widget = val.startsWith('img:') ?
-            Icon({
-                icon: val.replace('img:', ''),
-                size: 200,
-            }) :
+        const widget = Box({
+            css: `
+                border: 2px solid @accent_bg_color;
+                padding: 5px;
+            `,
+            child: val.startsWith('img:') ?
+                Icon({
+                    icon: val.replace('img:', ''),
+                    size: 200,
+                }) :
 
-            Label({
-                label: val,
-                truncate: 'end',
-                max_width_chars: 100,
-            });
+                Label({
+                    label: val,
+                    truncate: 'end',
+                    max_width_chars: 100,
+                }),
+        });
 
         list.add(widget);
         list.show_all();
@@ -49,7 +55,6 @@ const ClipBoard = () => {
         child: Scrollable({
             hscroll: 'never',
             vscroll: 'always',
-            css: 'min-width: 500px; min-height: 500px;',
             child: Box({
                 vertical: true,
                 children: [list],
@@ -59,6 +64,7 @@ const ClipBoard = () => {
 };
 
 App.config({
+    style: './style.css',
     windows: () => [
         ClipBoard(),
     ],
